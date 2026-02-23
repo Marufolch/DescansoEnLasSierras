@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Balneario los 2 Diquecitos</title>
+  <link rel="icon" type="image/jpeg" href="logo.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --verde: #2d6a4f;
+      --verde-claro: #52b788;
+      --arena: #f5f0e8;
+      --oscuro: #1b2e1e;
+      --texto: #333;
+      --blanco: #fff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--arena);
+      color: var(--texto);
+    }
+
+    /* ───── HERO ───── */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 500px;
+      background: url('Montana.jpg') center center / cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,.45) 0%, rgba(0,0,0,.2) 60%, rgba(27,46,30,.7) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    .hero-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 6vw, 5rem);
+      color: var(--blanco);
+      text-shadow: 0 4px 24px rgba(0,0,0,.55);
+      letter-spacing: .04em;
+      line-height: 1.15;
+    }
+
+    .hero-content p {
+      margin-top: 1rem;
+      color: rgba(255,255,255,.82);
+      font-size: 1.15rem;
+      font-weight: 300;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    /* ───── NAV ───── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--verde);
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      box-shadow: 0 4px 18px rgba(0,0,0,.22);
+    }
+
+    nav a {
+      color: var(--blanco);
+      text-decoration: none;
+      font-size: .95rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: 1.1rem 2.2rem;
+      transition: background .25s, color .25s;
+      border-right: 1px solid rgba(255,255,255,.1);
+    }
+    nav a:last-child { border-right: none; }
+    nav a:hover { background: var(--verde-claro); color: var(--oscuro); }
+
+    /* ───── SECCIONES ───── */
+    section {
+      padding: 80px 6vw;
+    }
+
+    section:nth-child(even) { background: #e8f0eb; }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      color: var(--verde);
+      margin-bottom: 1.6rem;
+      position: relative;
+      display: inline-block;
+    }
+    h2::after {
+      content: '';
+      display: block;
+      height: 3px;
+      width: 60%;
+      background: var(--verde-claro);
+      margin-top: .4rem;
+      border-radius: 2px;
+    }
+
+    /* ───── NOSOTROS ───── */
+    #nosotros p {
+      max-width: 800px;
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: #444;
+    }
+
+    /* ───── CARRUSEL ───── */
+    .carousel-wrapper {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.12);
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform .45s cubic-bezier(.4,0,.2,1);
+    }
+
+    .carousel-track .slide {
+      min-width: 100%;
+      height: 420px;
+      background: #ccc center/cover no-repeat;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(45,106,79,.8);
+      color: #fff;
+      border: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      font-size: 1.4rem;
+      cursor: pointer;
+      transition: background .2s;
+      z-index: 10;
+    }
+    .carousel-btn:hover { background: var(--verde); }
+    .carousel-btn.prev { left: 14px; }
+    .carousel-btn.next { right: 14px; }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: #aac;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .dot.active { background: var(--verde); }
+
+    /* ───── PUNTOS DE INTERÉS ───── */
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .links-grid a {
+      display: block;
+      background: var(--verde);
+      color: #fff;
+      text-decoration: none;
+      padding: 18px 22px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: .95rem;
+      letter-spacing: .05em;
+      text-align: center;
+      transition: background .22s, transform .18s, box-shadow .18s;
+      box-shadow: 0 4px 14px rgba(45,106,79,.18);
+    }
+    .links-grid a:hover {
+      background: var(--verde-claro);
+      color: var(--oscuro);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 22px rgba(45,106,79,.28);
+    }
+
+    /* ───── CONTACTO ───── */
+    .contact-card {
+      background: var(--verde);
+      color: #fff;
+      border-radius: 14px;
+      padding: 44px 48px;
+      max-width: 480px;
+      box-shadow: 0 10px 36px rgba(0,0,0,.15);
+    }
+
+    .contact-card p {
+      margin: 12px 0;
+      font-size: 1.05rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .contact-card span.icon { font-size: 1.3rem; }
+
+    .contact-card a { color: var(--verde-claro); }
+
+    /* ───── FOOTER ───── */
+    footer {
+      background: var(--oscuro);
+      color: rgba(255,255,255,.55);
+      text-align: center;
+      padding: 22px;
+      font-size: .85rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header id="hero">
+    <div class="hero-content">
+      <h1>Balneario los 2 Diquecitos</h1>
+      <p>Cabalango · Córdoba · Argentina</p>
+    </div>
+  </header>
+
+  <!-- MENÚ -->
+  <nav>
+    <a href="#nosotros">Inicio</a>
+    <a href="#cabanas">Cabañas</a>
+    <a href="#puntos">Puntos de interés</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+
+  <!-- NOSOTROS -->
+  <section id="nosotros">
+    <h2>Nosotros</h2>
+    <p>
+      Nuestro complejo se encuentra ubicado en el corazón de Cabalango, en las sierras de Córdoba, rodeado de naturaleza exuberante y aguas cristalinas.
+      Somos un emprendimiento familiar atendido por sus dueños desde hace más de 20 años, lo que nos permite brindar un trato cálido, personalizado y cercano a cada uno de nuestros visitantes.
+      Contamos con amplias instalaciones para disfrutar en familia o con amigos, incluyendo piletas naturales, zonas de descanso y cabañas totalmente equipadas para una estadía confortable.
+      Nuestra misión es que cada persona que nos visita se lleve los mejores recuerdos, sintiendo el descanso verdadero que solo la naturaleza serrana puede ofrecer.
+      Ven a conocernos y descubrí por qué tantas familias eligen volver año tras año a los 2 Diquecitos.
+    </p>
+  </section>
+
+  <!-- CABAÑAS -->
+  <section id="cabanas">
+    <h2>Cabañas</h2>
+    <div class="carousel-wrapper">
+      <div class="carousel-track" id="track">
+        <div class="slide"><img src="cabanas1.jpg" alt="Cabaña 1"/></div>
+        <div class="slide"><img src="cabanas2.jpg" alt="Cabaña 2"/></div>
+        <div class="slide"><img src="cabanas3.jpg" alt="Cabaña 3"/></div>
+        <div class="slide"><img src="cabanas4.jpg" alt="Cabaña 4"/></div>
+        <div class="slide"><img src="cabanas5.jpg" alt="Cabaña 5"/></div>
+        <div class="slide"><img src="cabanas6.jpg" alt="Cabaña 6"/></div>
+      </div>
+      <button class="carousel-btn prev" onclick="move(-1)">&#8592;</button>
+      <button class="carousel-btn next" onclick="move(1)">&#8594;</button>
+    </div>
+    <div class="carousel-dots" id="dots"></div>
+  </section>
+
+  <!-- PUNTOS DE INTERÉS -->
+  <section id="puntos">
+    <h2>Puntos de interés</h2>
+    <div class="links-grid">
+      <a href="#">🏔️ Cerro de la Cruz</a>
+      <a href="#">💧 Dique Los Molinos</a>
+      <a href="#">🌿 Reserva Natural Cabalango</a>
+      <a href="#">🐎 Cabalgatas La Quebrada</a>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto">
+    <h2>Contacto</h2>
+    <div class="contact-card">
+      <p><span class="icon">👤</span> <strong>Mariana Linares</strong></p>
+      <p><span class="icon">📞</span> +54 351 456-7890</p>
+      <p><span class="icon">✉️</span> <a href="mailto:mariana@diquecitos.com.ar">mariana@diquecitos.com.ar</a></p>
+      <p><span class="icon">📍</span> Cabalango, Córdoba, Argentina</p>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 Balneario los 2 Diquecitos · Cabalango, Córdoba
+  </footer>
+
+  <script>
+    // ── Carrusel ──
+    const track = document.getElementById('track');
+    const dotsContainer = document.getElementById('dots');
+    const total = track.children.length;
+    let current = 0;
+
+    // crear dots
+    for (let i = 0; i < total; i++) {
+      const d = document.createElement('div');
+      d.className = 'dot' + (i === 0 ? ' active' : '');
+      d.onclick = () => goTo(i);
+      dotsContainer.appendChild(d);
+    }
+
+    function goTo(n) {
+      current = (n + total) % total;
+      track.style.transform = `translateX(-${current * 100}%)`;
+      document.querySelectorAll('.dot').forEach((d, i) =>
+        d.classList.toggle('active', i === current));
+    }
+
+    function move(dir) { goTo(current + dir); }
+
+    // auto-play
+    setInterval(() => move(1), 4000);
+  </script>
+</body>
+</html>

@@ -10,7 +10,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --verde: #2d6a4f;
+      --verde: #2493dd;
       --verde-claro: #52b788;
       --arena: #f5f0e8;
       --oscuro: #1b2e1e;
@@ -31,7 +31,7 @@
       position: relative;
       height: 100vh;
       min-height: 500px;
-      background: url('Montana.jpg') center center / cover no-repeat;
+      background: url('dique.jpg') center center / cover no-repeat;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -41,7 +41,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, rgba(0,0,0,.45) 0%, rgba(0,0,0,.2) 60%, rgba(27,46,30,.7) 100%);
+      background: linear-gradient(to bottom, rgba(0,0,0,.05) 50%, rgba(27,46,30,.7) 100%);
     }
 
     .hero-content {
@@ -196,11 +196,12 @@
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 16px;
       margin-top: 10px;
+      
     }
 
     .links-grid a {
       display: block;
-      background: var(--verde);
+      background: rgb(4, 107, 155);
       color: #fff;
       text-decoration: none;
       padding: 18px 22px;
@@ -264,9 +265,10 @@
   <!-- MENÚ -->
   <nav>
     <a href="#nosotros">Inicio</a>
-    <a href="#cabanas">Cabañas</a>
-    <a href="#puntos">Puntos de interés</a>
+    <a href="#complejo">Complejo</a>
+    <a href="#puntos">Nuestros Servicios</a>
     <a href="#contacto">Contacto</a>
+    <a href="#cabanas">Cabañas</a>
   </nav>
 
   <!-- NOSOTROS -->
@@ -281,15 +283,16 @@
     </p>
   </section>
 
-  <!-- CABAÑAS -->
-  <section id="cabanas">
-    <h2>Cabañas</h2>
+ 
+   <!-- CABAÑAS -->
+  <section id="complejo">
+    <h2>Complejo</h2>
     <div class="carousel-wrapper">
       <div class="carousel-track" id="track">
-        <div class="slide"><img src="cabanas1.jpg" alt="Cabaña 1"/></div>
-        <div class="slide"><img src="cabanas2.jpg" alt="Cabaña 2"/></div>
-        <div class="slide"><img src="cabanas3.jpg" alt="Cabaña 3"/></div>
-        <div class="slide"><img src="cabanas4.jpg" alt="Cabaña 4"/></div>
+        <div class="slide"><img src="complejo.jpg" alt="Cabaña 1"/></div>
+        <div class="slide"><img src="complejo1.jpg" alt="Cabaña 2"/></div>
+        <div class="slide"><img src="complejo2.jpg" alt="Cabaña 3"/></div>
+        <div class="slide"><img src="complejo3.jpg" alt="Cabaña 4"/></div>
         <div class="slide"><img src="cabanas5.jpg" alt="Cabaña 5"/></div>
         <div class="slide"><img src="cabanas6.jpg" alt="Cabaña 6"/></div>
       </div>
@@ -299,14 +302,30 @@
     <div class="carousel-dots" id="dots"></div>
   </section>
 
+  <section id="cabanas">
+    <h2>Cabañas</h2>
+    <div class="carousel-wrapper">
+      <div class="carousel-track" id="track2">
+        <div class="slide"><img src="cabanas1.jpg" alt="Cabaña 1"/></div>
+        <div class="slide"><img src="cabanas6.jpg" alt="Cabaña 2"/></div>
+        <div class="slide"><img src="cabanas5.jpg" alt="Cabaña 3"/></div>
+        <div class="slide"><img src="cabanas4.jpg" alt="Cabaña 4"/></div>
+      </div>
+      <button class="carousel-btn prev" onclick="move2(-1)">&#8592;</button>
+      <button class="carousel-btn next" onclick="move2(1)">&#8594;</button>
+    </div>
+    <div class="carousel-dots" id="dots2"></div>
+  </section>
+
   <!-- PUNTOS DE INTERÉS -->
   <section id="puntos">
-    <h2>Puntos de interés</h2>
+    <h2>Nuestros Servicios</h2>
     <div class="links-grid">
-      <a href="#">🏔️ Cerro de la Cruz</a>
-      <a href="#">💧 Dique Los Molinos</a>
-      <a href="#">🌿 Reserva Natural Cabalango</a>
-      <a href="#">🐎 Cabalgatas La Quebrada</a>
+      <a href="#">Asadores junto al rio</a>
+      <a href="#">Baños</a>
+      <a href="#">Estacionamiento con sombra</a>
+      <a href="#">Cabalgatas</a>
+      <a href="#">Treking</a>
     </div>
   </section>
 
@@ -352,5 +371,29 @@
     // auto-play
     setInterval(() => move(1), 4000);
   </script>
+  <script>
+  const track2 = document.getElementById('track2');
+  const dotsContainer2 = document.getElementById('dots2');
+  const total2 = track2.children.length;
+  let current2 = 0;
+
+  for (let i = 0; i < total2; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo2(i);
+    dotsContainer2.appendChild(d);
+  }
+
+  function goTo2(n) {
+    current2 = (n + total2) % total2;
+    track2.style.transform = `translateX(-${current2 * 100}%)`;
+    dotsContainer2.querySelectorAll('.dot').forEach((d, i) =>
+      d.classList.toggle('active', i === current2));
+  }
+
+  function move2(dir) { goTo2(current2 + dir); }
+
+  setInterval(() => move2(1), 4000);
+</script>
 </body>
 </html>

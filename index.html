@@ -24,17 +24,19 @@
       font-family: 'Lato', sans-serif;
       background: var(--arena);
       color: var(--texto);
+      overflow-x: hidden;
     }
 
     /* ───── HERO ───── */
     #hero {
       position: relative;
-      height: 100vh;
-      min-height: 500px;
-      background: url('dique.jpg') center center / cover no-repeat;
+      min-height: 60vh;
+      height: auto;
+      background: url('dique.jpg') top center / cover no-repeat;
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 80px 20px;
     }
 
     #hero::before {
@@ -47,12 +49,12 @@
     .hero-content {
       position: relative;
       text-align: center;
-      padding: 0 20px;
+      padding: 0 10px;
     }
 
     .hero-content h1 {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(2.4rem, 6vw, 5rem);
+      font-size: clamp(2rem, 6vw, 5rem);
       color: var(--blanco);
       text-shadow: 0 4px 24px rgba(0,0,0,.55);
       letter-spacing: .04em;
@@ -76,7 +78,7 @@
       background: var(--verde);
       display: flex;
       justify-content: center;
-      gap: 0;
+      flex-wrap: wrap;
       box-shadow: 0 4px 18px rgba(0,0,0,.22);
     }
 
@@ -87,7 +89,7 @@
       font-weight: 700;
       letter-spacing: .12em;
       text-transform: uppercase;
-      padding: 1.1rem 2.2rem;
+      padding: 1rem 1.8rem;
       transition: background .25s, color .25s;
       border-right: 1px solid rgba(255,255,255,.1);
     }
@@ -127,76 +129,86 @@
       color: #444;
     }
 
-    /* ───── CARRUSEL ───── */
-    .carousel-wrapper {
-      position: relative;
-      overflow: hidden;
-      border-radius: 12px;
-      box-shadow: 0 8px 32px rgba(0,0,0,.12);
-    }
+   /*----------carousel-wrapper------------*/
+ .carousel-wrapper {
+  position: relative;
+  overflow: hidden;       /* evita que se vea la siguiente slide */
+  width: 100%;
+  border-radius: 12px;
+  aspect-ratio: 16 / 9;   /* ajusta altura según ancho */
+}
 
-    .carousel-track {
-      display: flex;
-      transition: transform .45s cubic-bezier(.4,0,.2,1);
-    }
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease;
+  width: 100%;           /* ancho del track = ancho del wrapper */
+}
 
-    .carousel-track .slide {
-      min-width: 100%;
-      height: 420px;
-      background: #ccc center/cover no-repeat;
-      display: flex;
-      align-items: flex-end;
-    }
+.carousel-track .slide {
+  flex: 0 0 100%;        /* cada slide ocupa todo el ancho del wrapper */
+  height: 100%;
+  position: relative;
+}
 
-    .slide img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
+.carousel-track .slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;      /* imagen llena el contenedor */
+  display: block;
+}
 
-    .carousel-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(45,106,79,.8);
-      color: #fff;
-      border: none;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      font-size: 1.4rem;
-      cursor: pointer;
-      transition: background .2s;
-      z-index: 10;
-    }
-    .carousel-btn:hover { background: var(--verde); }
-    .carousel-btn.prev { left: 14px; }
-    .carousel-btn.next { right: 14px; }
+/* Botones */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(45,106,79,.8);
+  color: #fff;
+  border: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  font-size: 1.4rem;
+  cursor: pointer;
+  z-index: 10;
+}
 
-    .carousel-dots {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 14px;
-    }
+.carousel-btn.prev { left: 14px; }
+.carousel-btn.next { right: 14px; }
+.carousel-btn:hover { background: var(--verde); }
 
-    .dot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      background: #aac;
-      cursor: pointer;
-      transition: background .2s;
-    }
-    .dot.active { background: var(--verde); }
+/* Dots */
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 14px;
+}
 
+.dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: #aac;
+  cursor: pointer;
+  transition: background .2s;
+}
+
+.dot.active { background: var(--verde); }
+
+/* Ajustes móviles (opcional) */
+@media (max-width: 768px) {
+  .carousel-wrapper { aspect-ratio: 4 / 3; }
+}
+
+@media (max-width: 480px) {
+  .carousel-wrapper { aspect-ratio: 3 / 2; }
+}
     /* ───── PUNTOS DE INTERÉS ───── */
     .links-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 16px;
       margin-top: 10px;
-      
     }
 
     .links-grid a {
@@ -250,6 +262,28 @@
       padding: 22px;
       font-size: .85rem;
     }
+
+    /* ───── MEDIA QUERIES ───── */
+    @media (max-width: 768px) {
+      section { padding: 50px 4vw; }
+
+      .hero-content h1 { font-size: clamp(1.8rem, 8vw, 3rem); }
+      .hero-content p { font-size: 1rem; }
+
+      nav a { padding: 0.7rem 1rem; font-size: 0.85rem; }
+      
+      .carousel-track .slide { aspect-ratio: 4/3; }
+      .carousel-btn { width: 36px; height: 36px; font-size: 1rem; }
+      
+      .contact-card { padding: 24px 28px; width: 90%; margin: 0 auto; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-content h1 { font-size: clamp(1.5rem, 10vw, 2.5rem); }
+      .hero-content p { font-size: 0.9rem; }
+
+      .carousel-track .slide { aspect-ratio: 3/2; }
+    }
   </style>
 </head>
 <body>
@@ -283,8 +317,7 @@
     </p>
   </section>
 
- 
-   <!-- CABAÑAS -->
+  <!-- COMPLEJO -->
   <section id="complejo">
     <h2>Complejo</h2>
     <div class="carousel-wrapper">
@@ -302,6 +335,7 @@
     <div class="carousel-dots" id="dots"></div>
   </section>
 
+  <!-- CABAÑAS -->
   <section id="cabanas">
     <h2>Cabañas</h2>
     <div class="carousel-wrapper">
@@ -345,55 +379,72 @@
   </footer>
 
   <script>
-    // ── Carrusel ──
-    const track = document.getElementById('track');
-    const dotsContainer = document.getElementById('dots');
-    const total = track.children.length;
-    let current = 0;
+    // ── Carrusel 1 ──
+    // ── Carrusel 1 ──
+const track = document.getElementById('track');
+const slides = Array.from(track.children);
+const dotsContainer = document.getElementById('dots');
+let current = 0;
 
-    // crear dots
-    for (let i = 0; i < total; i++) {
-      const d = document.createElement('div');
-      d.className = 'dot' + (i === 0 ? ' active' : '');
-      d.onclick = () => goTo(i);
-      dotsContainer.appendChild(d);
-    }
+// Crear dots
+slides.forEach((_, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'dot' + (i === 0 ? ' active' : '');
+  dot.onclick = () => goToSlide(i);
+  dotsContainer.appendChild(dot);
+});
 
-    function goTo(n) {
-      current = (n + total) % total;
-      track.style.transform = `translateX(-${current * 100}%)`;
-      document.querySelectorAll('.dot').forEach((d, i) =>
-        d.classList.toggle('active', i === current));
-    }
+function goToSlide(index) {
+  current = (index + slides.length) % slides.length;
+  const slideWidth = track.offsetWidth; // ancho real del carrusel
+  track.style.transform = `translateX(-${current * slideWidth}px)`;
+  document.querySelectorAll('.dot').forEach((d, i) =>
+    d.classList.toggle('active', i === current)
+  );
+}
 
-    function move(dir) { goTo(current + dir); }
+function move(dir) {
+  goToSlide(current + dir);
+}
 
-    // auto-play
-    setInterval(() => move(1), 4000);
+// Auto-play
+setInterval(() => move(1), 4000);
+
+// Ajuste al cambiar tamaño de pantalla
+window.addEventListener('resize', () => {
+  goToSlide(current); // recalcula translateX
+});
+
+// ── Carrusel 2 ──
+const track2 = document.getElementById('track2');
+const slides2 = Array.from(track2.children);
+const dotsContainer2 = document.getElementById('dots2');
+let current2 = 0;
+
+slides2.forEach((_, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'dot' + (i === 0 ? ' active' : '');
+  dot.onclick = () => goToSlide2(i);
+  dotsContainer2.appendChild(dot);
+});
+
+function goToSlide2(index) {
+  current2 = (index + slides2.length) % slides2.length;
+  const slideWidth = track2.offsetWidth; // ancho real del carrusel
+  track2.style.transform = `translateX(-${current2 * slideWidth}px)`;
+  dotsContainer2.querySelectorAll('.dot').forEach((d, i) =>
+    d.classList.toggle('active', i === current2)
+  );
+}
+
+function move2(dir) {
+  goToSlide2(current2 + dir);
+}
+
+setInterval(() => move2(1), 4000);
+window.addEventListener('resize', () => {
+  goToSlide2(current2);
+});
   </script>
-  <script>
-  const track2 = document.getElementById('track2');
-  const dotsContainer2 = document.getElementById('dots2');
-  const total2 = track2.children.length;
-  let current2 = 0;
-
-  for (let i = 0; i < total2; i++) {
-    const d = document.createElement('div');
-    d.className = 'dot' + (i === 0 ? ' active' : '');
-    d.onclick = () => goTo2(i);
-    dotsContainer2.appendChild(d);
-  }
-
-  function goTo2(n) {
-    current2 = (n + total2) % total2;
-    track2.style.transform = `translateX(-${current2 * 100}%)`;
-    dotsContainer2.querySelectorAll('.dot').forEach((d, i) =>
-      d.classList.toggle('active', i === current2));
-  }
-
-  function move2(dir) { goTo2(current2 + dir); }
-
-  setInterval(() => move2(1), 4000);
-</script>
 </body>
 </html>
